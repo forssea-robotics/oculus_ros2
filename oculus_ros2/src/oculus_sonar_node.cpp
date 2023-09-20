@@ -102,8 +102,8 @@ OculusSonarNode::OculusSonarNode()
   for (const std::string& param_name : dynamic_parameters_names_) {
     setConfigCallback(this->get_parameters(std::vector{param_name}));
   }
-  this->param_cb_ = this->add_on_set_parameters_callback(std::bind(&OculusSonarNode::setConfigCallback, this,
-      std::placeholders::_1));  
+  this->param_cb_ =
+      this->add_on_set_parameters_callback(std::bind(&OculusSonarNode::setConfigCallback, this, std::placeholders::_1));
 
   this->sonar_driver_->add_status_callback(std::bind(&OculusSonarNode::publishStatus, this, std::placeholders::_1));
   this->sonar_driver_->add_ping_callback(std::bind(&OculusSonarNode::publishPing, this, std::placeholders::_1));
