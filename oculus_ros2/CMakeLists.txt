@@ -59,9 +59,7 @@ ament_target_dependencies(oculus_viewer_node PUBLIC
     cv_bridge
 )
 
-install(PROGRAMS scripts/display_oculus_file.py scripts/oculus_to_rosbag.py DESTINATION bin)
 install(DIRECTORY launch cfg DESTINATION share/${PROJECT_NAME})
-install(PROGRAMS scripts/oculus_subscriber_to_image.py DESTINATION lib/${PROJECT_NAME})
 install(TARGETS oculus_sonar_node oculus_viewer_node DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

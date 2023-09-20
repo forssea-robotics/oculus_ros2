@@ -39,8 +39,8 @@ SonarViewer::SonarViewer(rclcpp::Node* node) : node_(node) {
 SonarViewer::~SonarViewer() {}
 
 void SonarViewer::publishFan(const oculus_interfaces::msg::Ping& ros_ping_msg) const {
-  // const int offset = ping->ping_data_offset(); // TODO(hugoyvrn)
-  const int offset = -16;  // quick fix TODO(hugoyvrn, why 229?)
+  // const int offset = ping->ping_data_offset(); // TODO(anyone, It is possible to get ping data offset?)
+  const int offset = -16;  // quick fix TODO(anyone, offset is a empirical value depending of the data played)
 
   publishFan(
       ros_ping_msg.n_beams, ros_ping_msg.n_ranges, offset, ros_ping_msg.ping_data, ros_ping_msg.master_mode, ros_ping_msg.header);
