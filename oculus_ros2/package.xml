@@ -8,7 +8,6 @@
 
   <license>BSD3</license>
 
-  <!-- TODO(hugoyvrn, Cleannig in dependency needed) -->
   <depend> ament_cmake </depend>
   <depend> rclcpp </depend>
   <depend> rclpy </depend>
@@ -19,9 +18,6 @@
   <depend> oculus_interfaces </depend>
   <depend> cv_bridge </depend>
   <depend> OpenCV  </depend>
-  <!-- <depend>message_generation</depend> -->
-  <!-- <depend>message_runtime</depend> -->
-  <!-- <depend>Boost</depend> -->
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

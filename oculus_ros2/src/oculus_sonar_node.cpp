@@ -102,10 +102,8 @@ OculusSonarNode::OculusSonarNode()
   for (const std::string& param_name : dynamic_parameters_names_) {
     setConfigCallback(this->get_parameters(std::vector{param_name}));
   }
-  this->param_cb_ = this->add_on_set_parameters_callback(std::bind(&OculusSonarNode::setConfigCallback, this,
-      std::placeholders::_1));  // TODO(hugoyvrn, to move before parameters initialisation ?)
-
-  // this->??(&OculusSonarNode::enableRunMode)  // TODO(hugoyvrn)
+  this->param_cb_ =
+      this->add_on_set_parameters_callback(std::bind(&OculusSonarNode::setConfigCallback, this, std::placeholders::_1));
 
   this->sonar_driver_->add_status_callback(std::bind(&OculusSonarNode::publishStatus, this, std::placeholders::_1));
   this->sonar_driver_->add_ping_callback(std::bind(&OculusSonarNode::publishPing, this, std::placeholders::_1));
@@ -140,7 +138,7 @@ void OculusSonarNode::setMinimalFlags(uint8_t& flags) const {
          | flagByte::SIMPLE_PING;  // use simple ping
 
   if (currentSonarParameters_.frequency_mode == params::FREQUENCY_MODE.max) {
-    // TODO(hugoyvrn, gain_assist not working, to fix)
+    // TODO(anyone, gain_assist not working, to fix)
     // flags |= flagByte::GAIN_ASSIST;
     flags &= ~flagByte::GAIN_ASSIST;
   }
@@ -175,8 +173,6 @@ void OculusSonarNode::publishStatus(const OculusStatusMsg& status) {
         "The sonar version seems to be different than M1200d."
         " This driver is not suppose to work with your sonar.");
   }
-
-  // TODO(hugoyvrn, update ros param ?)
 
   static oculus_interfaces::msg::OculusStatus msg;
   oculus::toMsg(msg, status);
@@ -271,7 +267,7 @@ void OculusSonarNode::publishPing(const oculus::PingMessage::ConstPtr& ping) {
   pressure_ros_msg.variance = 0;  // 0 is interpreted as variance unknown
   this->pressure_publisher_->publish(pressure_ros_msg);
 
-  // TODO(hugoyvrn, publish bearings)
+  // TODO(anyone, publish bearings)
 
   sonar_viewer_.publishFan(ping, frame_id_);
 }
@@ -351,7 +347,7 @@ void OculusSonarNode::updateLocalParameters(SonarParameters& parameters, SonarDr
   new_parameters.push_back(rclcpp::Parameter(params::GAMMA_CORRECTION.name, feedback.gammaCorrection));
   new_parameters.push_back(rclcpp::Parameter(params::GAIN_PERCENT.name, feedback.gainPercent));
   new_parameters.push_back(rclcpp::Parameter(params::SOUND_SPEED.name, feedback.speedOfSound));
-  //  // use_salinity  // TODO(hugoyvrn)
+  //  // use_salinity  // TODO(anyone)
   // {
   //     rclcpp::Parameter param(params::USE_SALINITY.name, );
   //     new_parameters.push_back(param);
@@ -400,7 +396,7 @@ void OculusSonarNode::sendParamToSonar(rclcpp::Parameter param, rcl_interfaces::
     RCLCPP_INFO_STREAM(this->get_logger(), "Updating sound_speed to " << param.as_double() << " m/s.");
     if (!currentRosParameters_.use_salinity) {
       if (param.as_double() >= 1400.0 &&
-          param.as_double() <= 1600.0)  // TODO(hugoyvrn, why is there a range verification here and not for other parameters?)
+          param.as_double() <= 1600.0)  // TODO(anyone, Why is there a range verification here and not for other parameters?)
         newConfig.speedOfSound = param.as_double();
       else
         RCLCPP_INFO_STREAM(this->get_logger(), "Speed of sound must be between 1400.0 and 1600.0.");
@@ -421,7 +417,7 @@ void OculusSonarNode::sendParamToSonar(rclcpp::Parameter param, rcl_interfaces::
   checkMinimalFlags(feedback.flags);
 
   handleFeedbackForParam<double>(result, param, newConfig.masterMode, feedback.masterMode, params::FREQUENCY_MODE.name);
-  // newConfig.pingRate      != feedback.pingRate  // is broken (?) sonar side TODO(???)
+  // newConfig.pingRate      != feedback.pingRate  // is broken (?) sonar side TODO(anyone?)
   handleFeedbackForParam<bool>(result, param, (newConfig.flags & flagByte::GAIN_ASSIST) ? 1 : 0,
       (feedback.flags & flagByte::GAIN_ASSIST) ? 1 : 0, params::GAIN_ASSIT.name);
   handleFeedbackForParam<int>(result, param, (newConfig.flags & flagByte::NBEAMS) ? 1 : 0,
@@ -478,10 +474,10 @@ rcl_interfaces::msg::SetParametersResult OculusSonarNode::setConfigCallback(cons
 
     } else if (std::find(dynamic_parameters_names_.begin(), dynamic_parameters_names_.end(), param.get_name()) !=
                dynamic_parameters_names_.end()) {
-      // QUICK FIX TODO(hugoyvrn, gain_assist not working, to fix)
+      // QUICK FIX TODO(anyone, gain_assist not working, to fix)
       if (currentSonarParameters_.gain_assist && currentSonarParameters_.frequency_mode &&
           param.get_name() == params::FREQUENCY_MODE.name) {
-        result.reason = "You must set gain_assist to false before changing frequency TODO(to fix).";
+        result.reason = "You must set gain_assist to false before changing frequency TODO(anyone, to fix).";
         return result;
       }
       // END QUICK FIX
