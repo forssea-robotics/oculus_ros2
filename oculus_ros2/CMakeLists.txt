@@ -17,7 +17,7 @@ find_package(sensor_msgs REQUIRED)
 find_package(oculus_driver REQUIRED)
 find_package(oculus_interfaces REQUIRED)
 find_package(cv_bridge REQUIRED)
-find_package(OpenCV 4.5.4 REQUIRED)
+find_package(OpenCV 4.5 REQUIRED)
 
 add_executable(oculus_sonar_node
     src/oculus_sonar_node.cpp
