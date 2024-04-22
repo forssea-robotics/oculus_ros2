@@ -8,16 +8,16 @@
 
   <license>BSD3</license>
 
-  <depend> ament_cmake </depend>
-  <depend> rclcpp </depend>
-  <depend> rclpy </depend>
-  <depend> rcl_interfaces </depend>
-  <depend> std_msgs </depend>
-  <depend> sensor_msgs </depend>
-  <depend> oculus_driver </depend>
-  <depend> oculus_interfaces </depend>
-  <depend> cv_bridge </depend>
-  <depend> OpenCV  </depend>
+  <depend>ament_cmake</depend>
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>rcl_interfaces</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>oculus_driver</depend>
+  <depend>oculus_interfaces</depend>
+  <depend>cv_bridge</depend>
+  <depend>libopencv-dev</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
