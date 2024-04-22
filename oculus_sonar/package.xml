@@ -12,7 +12,6 @@
     <exec_depend>oculus_driver</exec_depend>
     <exec_depend>oculus_interfaces</exec_depend>
     <exec_depend>oculus_ros2</exec_depend>
-    <exec_depend>oculus_image_converter</exec_depend>
 
     <export>
         <build_type>ament_cmake</build_type>
